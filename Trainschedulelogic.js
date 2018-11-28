@@ -13,22 +13,22 @@ var database = firebase.database();
 
 $("#submit-btn").on("click", function (event) {
     event.preventDefault();
-    var trainname = $("#train-name-input").val().trim();
+    var name = $("#train-name-input").val().trim();
     var destination = $("#destination-input").val().trim();
-    var traintime = $("#time-input").val().trim();
+    var time = $("#time-input").val().trim();
     var frequency = $("#frequency-input").val().trim();
 
-    console.log(trainname);
+    console.log(name);
     console.log(destination);
-    console.log(traintime);
+    console.log(time);
     console.log(frequency);
 
     database.ref("/trains").push({
 
-        "trainname":trainname,
-        "destination":destination,
-        "traintime":traintime,
-        "frequency":frequency
+        "trainname":name,
+        "traindestination":destination,
+        "traintime":time,
+        "trainfrequency":frequency
     });
 
   $("#train-name-input").val("");
@@ -37,10 +37,29 @@ $("#submit-btn").on("click", function (event) {
   $("#frequency-input").val("");
 });
 
-database.ref("/trains").on("child_added",function(snapshot)
+database.ref("/trains").on("child_added",function(childsnapshot)
 {
   
-    console.log(snapshot.key);
-    console.log(snapshot.val);
+    console.log(childsnapshot.key);
+    console.log(childsnapshot.val());
+    var trainobj={
+        key:childsnapshot.key,
+        name:childsnapshot.val().trainname,
+        destination:childsnapshot.val().traindestination,       
+        frequency:childsnapshot.val().trainfrequency
+    };
+
+    console.log(trainobj);
+    var trainObjString = JSON.stringify(trainobj);
+    var tr = $("<tr>");
+    tr.addClass(childsnapshot.key);
+    tr.append(
+        $("<td>").text(childsnapshot.val().trainname).addClass("name"),
+        $("<td>").text(childsnapshot.val().traindestination).addClass("destination"),
+        $("<td>").text(childsnapshot.val().trainfrequency).addClass("frequency")  
+      );
+    
+      // Append the new row to the table
+      $("#train-table > tbody").append(tr);
 
 });
