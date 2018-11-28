@@ -70,7 +70,7 @@ database.ref("/trains").on("child_added", function (childsnapshot) {
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-    console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
+    console.log("ARRIVAL TIME: " + moment(nextTrain).format("LT"));
 
     var trainObjString = JSON.stringify(trainobj);
     var tr = $("<tr>");
@@ -79,7 +79,7 @@ database.ref("/trains").on("child_added", function (childsnapshot) {
         $("<td>").text(childsnapshot.val().trainname).addClass("name"),
         $("<td>").text(childsnapshot.val().traindestination).addClass("destination"),
         $("<td>").text(childsnapshot.val().trainfrequency).addClass("frequency"),
-        $("<td>").text(moment(nextTrain).format("hh:mm")).addClass("nextArrival"),
+        $("<td>").text(moment(nextTrain).format("LT")).addClass("nextArrival"),
         $("<td>").text(tMinutesTillTrain).addClass("minsaway")
     );
     // Append the new row to the table
