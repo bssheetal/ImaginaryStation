@@ -11,8 +11,11 @@ firebase.initializeApp(config);
 
 var database = firebase.database();
 
+// 2. Button for adding trains
 $("#submit-btn").on("click", function (event) {
     event.preventDefault();
+    
+    // Grabs user input
     var name = $("#train-name-input").val().trim();
     var destination = $("#destination-input").val().trim();
     var time = $("#time-input").val().trim();
@@ -23,6 +26,7 @@ $("#submit-btn").on("click", function (event) {
     console.log(time);
     console.log(frequency);
 
+    //create collection trains in database and upload train data into DB
     database.ref("/trains").push({
 
         "trainname": name,
@@ -31,12 +35,14 @@ $("#submit-btn").on("click", function (event) {
         "trainfrequency": frequency
     });
 
+    // Clears all of the text-boxes
     $("#train-name-input").val("");
     $("#destination-input").val("");
     $("#time-input").val("");
     $("#frequency-input").val("");
 });
 
+//Create Firebase event for adding train to the database and a row in the html when a user adds an entry
 database.ref("/trains").on("child_added", function (childsnapshot) {
 
     console.log(childsnapshot.key);
@@ -69,10 +75,11 @@ database.ref("/trains").on("child_added", function (childsnapshot) {
     var tMinutesTillTrain = TFrequency - tRemainder;
     console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
 
+    //Next train time
     var nextTrain = moment().add(tMinutesTillTrain, "minutes");
     console.log("ARRIVAL TIME: " + moment(nextTrain).format("LT"));
 
-    var trainObjString = JSON.stringify(trainobj);
+    //var trainObjString = JSON.stringify(trainobj);
     var tr = $("<tr>");
     tr.addClass(childsnapshot.key);
     tr.append(
