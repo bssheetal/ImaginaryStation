@@ -8,3 +8,10 @@
     messagingSenderId: "898054871422"
   };
   firebase.initializeApp(config);
+
+  var database=firebase.database();
+
+  $("#submit-btn").on("click", function(event) {
+    event.preventDefault();
+
+  });
