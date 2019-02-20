@@ -9,9 +9,13 @@ To use the app simply view the listed train times. To add a train fill out the p
 
 # Built With 🚋
 Javascript - programming language
+
 jQuery - a javascript library
+
 Bootstrap - The web framework used
+
 Moment.js - Display and convert times
+
 Firebase - cloud database
 
 # Authors 🚋
